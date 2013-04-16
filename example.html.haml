@@ -1,0 +1,29 @@
+!!! 5
+%html{ :lang => 'en' }
+  %head
+    %meta{ :charset => 'UTF-8' }
+    %title Confirm with Reveal
+    = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.css"
+    = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.css"
+  %body
+
+    .row
+      .columns.text-center
+        %h1 Let’s do this!
+        = link_to 'The Big Red Button',
+          'http://www.youtube.com/watch?v=oHg5SJYRHA0',
+          class: 'button large radius alert',
+          data: { confirm: { title: 'Really?',
+                             text: 'Once the missiles are in the air, we can’t bring them back!',
+                             password: 'YES REALLY',
+                             button: 'Launch' } }
+
+    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.js"
+    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.reveal.js"
+    -#
+      If jquery_ujs (from jquery-rails) is included prior to confirm_with_reveal,
+      $.rails.allowAction will be overwritten to use Reveal rather than window.confirm()
+      on links with complex data-confirm attributes as in this demo. However, the plugin
+      will still work without jquery_ujs being present.
+    = javascript_include_tag "confirm_with_reveal"
