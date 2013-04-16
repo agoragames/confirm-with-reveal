@@ -1,5 +1,4 @@
-confirm-with-reveal
-===================
+# confirm-with-reveal
 
 Replacement for window.confirm() using the Reveal modal popup plugin from ZURB Foundation.
 
@@ -9,4 +8,6 @@ Requires [jQuery](http://jquery.com/), as well as ZURB’s [Reveal](http://found
 
 Integrates with the Rails [jQuery UJS adapter](https://github.com/indirect/jquery-rails) if the latter has been included, by overwriting `$.rails.allowAction`. Simple use of `confirm: "Are you sure?"` in the `link_to` helper will use the standard `window.confirm()` prompt; see CoffeeScript source for full usage details.
 
-See [example jsFiddle](http://jsfiddle.net/PtVNW/) for a demo.
+## Example
+
+See [this jsFiddle](http://jsfiddle.net/PtVNW/) for a demo.
