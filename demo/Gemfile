@@ -1,0 +1,9 @@
+source 'http://rubygems.org/'
+
+gem 'coffee-script'
+gem 'haml'
+gem 'json'
+gem 'shotgun'
+gem 'sinatra', :require => 'sinatra/base'
+gem 'sprockets'
+gem 'thin'

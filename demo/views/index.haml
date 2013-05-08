@@ -1,0 +1,46 @@
+!!! 5
+%html{ lang: 'en' }
+  %head
+    %meta{ charset: 'UTF-8' }
+    %title Confirm with Reveal
+    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.css' }
+    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.css' }
+  %body
+
+    .row
+      .columns.text-center
+        %h1 Confirm with Reveal
+
+        %p
+          Confirming a link click:
+          %a{ href: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
+              data: { confirm: { title: 'Really?',
+                                 text: 'I just want to be sure you’re sure.',
+                                 button: 'Do it!' }.to_json } } Danger, danger!
+
+        %form{ action: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
+               data: { confirm: { title: 'For serious?',
+                                  text: 'Are you really, really sure you want to do that?',
+                                  password: 'YES REALLY',
+                                  button: 'Launch' }.to_json } }
+          %p Confirming a form submission:
+          %p
+            %input{ type: 'submit', class: 'small button radius alert', value: 'High voltage!' }
+
+        %form{ action: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif' }
+          %p Confirming particular buttons in a form:
+          %p
+            %input{ type: 'submit', class: 'small button radius', value: 'Safe' }
+            %input{ type: 'submit', class: 'small button radius alert', value: 'Risky',
+                    data: { confirm: { title: 'That’s risky!',
+                                       text: 'You are venturing into a zone of danger.' }.to_json } }
+
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.reveal.js' }
+    -#
+      If jquery_ujs (from jquery-rails) is included prior to confirm_with_reveal,
+      $.rails.allowAction will be overwritten to use Reveal rather than window.confirm()
+      on links with complex data-confirm attributes as in this demo. However, the plugin
+      will still work without jquery_ujs being present.
+    %script{ src: asset_path('confirm_with_reveal') }
