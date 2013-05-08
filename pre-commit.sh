@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-make js
+make jsmin
