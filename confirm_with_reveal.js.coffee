@@ -42,12 +42,21 @@ reveal_confirm = (element) ->
   modal
     .find('.warning')
     .html(confirm.text || 'This action cannot be undone.')
-  confirm_button = element
-    .clone()
+
+  confirm_button = if element.is('a') then element.clone() else $('<a/>')
+  confirm_button
     .removeAttr('class')
     .removeAttr('data-confirm')
     .addClass('button radius alert inline confirm')
     .html(confirm.button || 'Confirm')
+
+  if element.is('form') or element.is(':input')
+    confirm_button.on 'click', ->
+      element
+        .closest('form')
+        .removeAttr('data-confirm')
+        .submit()
+
   modal
     .find('.cancel-button')
     .on 'click', (e) ->
