@@ -3,51 +3,69 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Confirm with Reveal by agoragames</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <title>Confirm with Reveal</title>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.css" rel="stylesheet">
+    <link href="stylesheets/styles.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Confirm with Reveal</h1>
-        <p>Replacement for window.confirm() using the Reveal modal popup plugin from ZURB Foundation.</p>
-
-        <p class="view"><a href="https://github.com/agoragames/confirm-with-reveal">View the Project on GitHub <small>agoragames/confirm-with-reveal</small></a></p>
-
-
+    <header>
+      <div class="row">
+        <div class="columns">
+          <h1>Confirm with Reveal</h1>
+          <p>
+            Replacement for <kbd>window.confirm()</kbd> using the
+            <a href="http://foundation.zurb.com/docs/components/reveal.html">Reveal modal popup plugin</a>
+            from <a href="http://foundation.zurb.com/">ZURB Foundation</a>.
+            Maintained by <a href="https://github.com/agoragames">Agora Games</a>.
+          </p>
+        </div>
+      </div>
+    </header>
+    <div class="row">
+      <div class="columns large-4">
         <ul>
-          <li><a href="https://github.com/agoragames/confirm-with-reveal/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/agoragames/confirm-with-reveal/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/agoragames/confirm-with-reveal">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/agoragames/confirm-with-reveal">View on <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/agoragames/confirm-with-reveal/zipball/master">Download <strong>ZIP file</strong></a></li>
+          <li><a href="https://github.com/agoragames/confirm-with-reveal/tarball/master">Download <strong>TAR ball</strong></a></li>
         </ul>
-      </header>
-      <section>
-        <h1>confirm-with-reveal</h1>
-
-<p>Replacement for window.confirm() using the Reveal modal popup plugin from ZURB Foundation.</p>
-
-<p>For maximum <strong>“are you really, really sure”</strong> protection, the user can optionally be prompted to type out a word or phrase to enable the button to proceed.</p>
-
-<p>Requires <a href="http://jquery.com/">jQuery</a>, as well as ZURB’s <a href="http://foundation.zurb.com/docs/components/reveal.html">Reveal</a> plugin.</p>
-
-<p>Integrates with the Rails <a href="https://github.com/indirect/jquery-rails">jQuery UJS adapter</a> if the latter has been included, by overwriting <code>$.rails.allowAction</code>. Simple use of <code>confirm: "Are you sure?"</code> in the <code>link_to</code> helper will use the standard <code>window.confirm()</code> prompt; see CoffeeScript source for full usage details.</p>
-
-<h2>Example</h2>
-
-<p>See <a href="http://jsfiddle.net/PtVNW/">this jsFiddle</a> for a demo.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/agoragames">agoragames</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+      </div>
+      <div class="columns large-8">
+        <h2>Examples</h2>
+        <h3>Confirming a link click</h3>
+        <p>
+          <a data-confirm='{"title":"Really?","text":"I just want to be sure you’re sure.","button":"Do it!"}' href="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">Danger, danger!</a>
+        </p>
+        <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif" data-confirm='{"title":"For serious?","text":"Are you really, really sure you want to do that?","password":"YES REALLY","button":"Launch"}'>
+          <h3>Confirming a form submission</h3>
+          <p>
+            <input class="small button radius alert" type="submit" value="High voltage!">
+          </p>
+        </form>
+        <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">
+          <h3>Confirming particular buttons in a form</h3>
+          <p>
+            <input class="small button radius" type="submit" value="Safe">
+            <input class="small button radius alert" data-confirm='{"title":"That’s risky!","text":"You are venturing into a zone of danger."}' type="submit" value="Risky">
+          </p>
+        </form>
+      </div>
     </div>
+    <footer>
+      <div class="row">
+        <div class="columns">
+          <p>Hosted on <a href="http://pages.github.com/">GitHub Pages</a>.</p>
+        </div>
+      </div>
+    </footer>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.reveal.js"></script>
     <script src="javascripts/scale.fix.js"></script>
-    
+    <script src="javascripts/confirm.js"></script>
   </body>
 </html>
