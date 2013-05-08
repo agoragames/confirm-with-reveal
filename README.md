@@ -10,4 +10,4 @@ Integrates with the Rails [jQuery UJS adapter](https://github.com/indirect/jquer
 
 ## Example
 
-See [this jsFiddle](http://jsfiddle.net/PtVNW/) for a demo.
+See [the project page](http://agoragames.github.io/confirm-with-reveal/) for a demo.
