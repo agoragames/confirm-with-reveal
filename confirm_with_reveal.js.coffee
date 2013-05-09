@@ -96,9 +96,11 @@ if $.rails
 
 else
 
-  $(document).on 'click', '[data-confirm]', (e) ->
+  confirm_handler = (e) ->
     proceed = reveal_confirm $(this)
     if !proceed
       e.preventDefault()
       e.stopImmediatePropagation()
     proceed
+  $(document).on 'click', 'a[data-confirm], :input[data-confirm]', confirm_handler
+  $(document).on 'submit', 'form[data-confirm]', confirm_handler
