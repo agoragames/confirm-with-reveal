@@ -13,10 +13,12 @@
 
         %p
           Confirming a link click:
+          -#
+            Specifying data: { confirm: true } results in a minimized attribute which
+            does not get picked up by jQuery's selector engine. Any other truthy value
+            should work fine.
           %a{ href: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
-              data: { confirm: { title: 'Really?',
-                                 text: 'I just want to be sure you’re sure.',
-                                 button: 'Do it!' }.to_json } } Danger, danger!
+              data: { confirm: 1 } } Danger, danger!
 
         %form{ action: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
                data: { confirm: { title: 'For serious?',
@@ -38,9 +40,20 @@
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js' }
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.js' }
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.reveal.js' }
+
     -#
       If jquery_ujs (from jquery-rails) is included prior to confirm_with_reveal,
       $.rails.allowAction will be overwritten to use Reveal rather than window.confirm()
       on links with complex data-confirm attributes as in this demo. However, the plugin
       will still work without jquery_ujs being present.
     %script{ src: asset_path('confirm_with_reveal') }
+
+    -# Localization may be customized if desired...
+    :coffeescript
+      window.confirm_localization =
+        confirm_button: 'Proceed'
+    -# Other L10n keys and default values:
+      cancel_button: 'Cancel'
+      warn_title: 'Are you sure?'
+      warn_body: 'This action cannot be undone.'
+      enter_password: 'Type <i>%s</i> to continue:'

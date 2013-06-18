@@ -19,7 +19,17 @@
 #   password   If set, will require the user to type out this string to enable the action
 #   button     Label for the button that does the delete/destroy/etc.
 
+localization_defaults =
+  warn_title: 'Are you sure?'
+  warn_body: 'This action cannot be undone.'
+  enter_password: 'Type <i>%s</i> to continue:'
+  confirm_button: 'Confirm'
+  cancel_button: 'Cancel'
+
 reveal_confirm = (element) ->
+
+  confirm_localization = $.extend {},
+    localization_defaults, window.confirm_localization
 
   confirm = element.data('confirm')
   return true unless confirm
@@ -31,24 +41,26 @@ reveal_confirm = (element) ->
       <h2 class='header'></h2>
       <p class='warning'></p>
       <div class='footer'>
-        <a class='cancel-button secondary button radius inline'>Cancel</a>
+        <a class='cancel-button secondary button radius inline'>
+          #{confirm_localization['cancel_button']}
+        </a>
       </div>
     </div>
     """
 
   modal
     .find('.header')
-    .html(confirm.title || 'Are you sure?')
+    .html(confirm.title || confirm_localization['warn_title'])
   modal
     .find('.warning')
-    .html(confirm.text || 'This action cannot be undone.')
+    .html(confirm.text || confirm_localization['warn_body'])
 
   confirm_button = if element.is('a') then element.clone() else $('<a/>')
   confirm_button
     .removeAttr('class')
     .removeAttr('data-confirm')
     .addClass('button radius alert inline confirm')
-    .html(confirm.button || 'Confirm')
+    .html(confirm.button || confirm_localization['confirm_button'])
 
   if element.is('form') or element.is(':input')
     confirm_button.on 'click', ->
@@ -66,8 +78,10 @@ reveal_confirm = (element) ->
     .append(confirm_button)
 
   if confirm.password
+    confirm_label =
+      confirm_localization['enter_password'].replace '%s', confirm.password
     confirm_html = """
-      <label>Type <i>#{confirm.password}</i> to continue:</label>
+      <label>#{confirm_label}</label>
       <input class='confirm-password' type='text' />
       """
     modal
