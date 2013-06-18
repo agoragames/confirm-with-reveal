@@ -14,17 +14,17 @@
         %p
           Confirming a link click:
           -#
-            Specifying data: { confirm: true } results in a minimized attribute which
-            does not get picked up by jQuery's selector engine. Any other truthy value
-            should work fine.
+            If a string value is set for the data-confirm attribute, the library will
+            fall back to the plain window.confirm function. Set an integer to use the
+            Reveal plugin with all default values.
           %a{ href: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
               data: { confirm: 1 } } Danger, danger!
 
         %form{ action: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
                data: { confirm: { title: 'For serious?',
-                                  text: 'Are you really, really sure you want to do that?',
+                                  body: 'Are you really, really sure you want to do that?',
                                   password: 'YES REALLY',
-                                  button: 'Launch' }.to_json } }
+                                  ok: 'Launch' }.to_json } }
           %p Confirming a form submission:
           %p
             %input{ type: 'submit', class: 'small button radius alert', value: 'High voltage!' }
@@ -35,7 +35,7 @@
             %input{ type: 'submit', class: 'small button radius', value: 'Safe' }
             %input{ type: 'submit', class: 'small button radius alert', value: 'Risky',
                     data: { confirm: { title: 'That’s risky!',
-                                       text: 'You are venturing into a zone of danger.' }.to_json } }
+                                       body: 'You are venturing into a zone of danger.' }.to_json } }
 
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js' }
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.js' }
@@ -51,9 +51,9 @@
     -# Localization may be customized if desired...
     :coffeescript
       window.confirm_localization =
-        confirm_button: 'Proceed'
+        ok: 'Proceed'
     -# Other L10n keys and default values:
-      cancel_button: 'Cancel'
-      warn_title: 'Are you sure?'
-      warn_body: 'This action cannot be undone.'
-      enter_password: 'Type <i>%s</i> to continue:'
+      cancel: 'Cancel'
+      title: 'Are you sure?'
+      body: 'This action cannot be undone.'
+      password: 'Type <i>%s</i> to continue:'
