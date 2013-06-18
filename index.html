@@ -38,9 +38,9 @@
         <h2>Examples</h2>
         <h3>Confirming a link click</h3>
         <p>
-          <a data-confirm='{"title":"Really?","text":"I just want to be sure you’re sure.","button":"Do it!"}' href="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">Danger, danger!</a>
+          <a data-confirm='1' href="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">Danger, danger!</a>
         </p>
-        <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif" data-confirm='{"title":"For serious?","text":"Are you really, really sure you want to do that?","password":"YES REALLY","button":"Launch"}'>
+        <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif" data-confirm='{"title":"For serious?","body":"Are you really, really sure you want to do that?","password":"YES REALLY","ok":"Launch"}'>
           <h3>Confirming a form submission</h3>
           <p>
             <input class="small button radius alert" type="submit" value="High voltage!">
@@ -50,7 +50,7 @@
           <h3>Confirming particular buttons in a form</h3>
           <p>
             <input class="small button radius" type="submit" value="Safe">
-            <input class="small button radius alert" data-confirm='{"title":"That’s risky!","text":"You are venturing into a zone of danger."}' type="submit" value="Risky">
+            <input class="small button radius alert" data-confirm='{"title":"That’s risky!","body":"You are venturing into a zone of danger."}' type="submit" value="Risky">
           </p>
         </form>
       </div>
