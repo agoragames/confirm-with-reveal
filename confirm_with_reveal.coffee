@@ -21,6 +21,8 @@
 #   ok         Label for the button that does the delete/destroy/etc.
 #   cancel     Label for the button that cancels out of the action
 
+$ = this.jQuery
+
 localization_defaults =
   title: 'Are you sure?'
   body: 'This action cannot be undone.'
