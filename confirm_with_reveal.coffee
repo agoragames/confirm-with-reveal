@@ -42,7 +42,7 @@ reveal_confirm = (element) ->
     return window.confirm confirm
 
   modal = $ """
-    <div class='reveal-modal medium'>
+    <div class='reveal-modal medium' data-reveal>
       <h2 class='header'></h2>
       <p class='warning'></p>
       <div class='footer'>
@@ -104,6 +104,7 @@ reveal_confirm = (element) ->
 
   modal
     .appendTo($('body'))
+    .foundation()
     .foundation('reveal', 'open')
     .on 'closed.fndtn.reveal', (e) ->
       modal.remove()

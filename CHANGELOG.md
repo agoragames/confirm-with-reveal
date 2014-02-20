@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2014-02-20 release
+
+* Compatibility update for ZURB Foundation 5.
+
 ## 2013-06-18 release
 
 * Add localization via configuration variable.

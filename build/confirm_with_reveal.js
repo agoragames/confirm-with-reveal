@@ -23,7 +23,7 @@
     if (typeof confirm === 'string') {
       return window.confirm(confirm);
     }
-    modal = $("<div class='reveal-modal medium'>\n  <h2 class='header'></h2>\n  <p class='warning'></p>\n  <div class='footer'>\n    <a class='cancel-button secondary button radius inline'>\n      " + confirm_localization['cancel'] + "\n    </a>\n  </div>\n</div>");
+    modal = $("<div class='reveal-modal medium' data-reveal>\n  <h2 class='header'></h2>\n  <p class='warning'></p>\n  <div class='footer'>\n    <a class='cancel-button secondary button radius inline'>\n      " + confirm_localization['cancel'] + "\n    </a>\n  </div>\n</div>");
     modal.find('.header').html(confirm.title || confirm_localization['title']);
     modal.find('.warning').html(confirm.body || confirm_localization['body']);
     confirm_button = element.is('a') ? element.clone() : $('<a/>');
@@ -50,7 +50,7 @@
         }
       });
     }
-    modal.appendTo($('body')).foundation('reveal', 'open').on('closed.fndtn.reveal', function(e) {
+    modal.appendTo($('body')).foundation().foundation('reveal', 'open').on('closed.fndtn.reveal', function(e) {
       return modal.remove();
     });
     return false;

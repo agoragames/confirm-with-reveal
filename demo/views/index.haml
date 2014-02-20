@@ -3,8 +3,8 @@
   %head
     %meta{ charset: 'UTF-8' }
     %title Confirm with Reveal
-    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.css' }
-    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.css' }
+    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/normalize.css' }
+    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css' }
   %body
 
     .row
@@ -37,9 +37,9 @@
                     data: { confirm: { title: 'That’s risky!',
                                        body: 'You are venturing into a zone of danger.' }.to_json } }
 
-    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js' }
-    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.js' }
-    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation/foundation.reveal.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/vendor/jquery.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/foundation/foundation.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/foundation/foundation.reveal.js' }
 
     -#
       If jquery_ujs (from jquery-rails) is included prior to confirm_with_reveal,
