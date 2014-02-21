@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.2 (2014-02-21)
+
+* Configuration options for classes on OK/Cancel buttons.
+
 ## 0.0.1 (2014-02-21)
 
 * Start using [semver](http://semver.org); add Bower package file.
