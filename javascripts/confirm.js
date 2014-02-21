@@ -23,9 +23,10 @@
     if (typeof confirm === 'string') {
       return window.confirm(confirm);
     }
-    modal = $("<div class='reveal-modal medium' data-reveal>\n  <h2 class='header'></h2>\n  <p class='warning'></p>\n  <div class='footer'>\n    <a class='cancel-button secondary button radius inline'>\n      " + confirm_localization['cancel'] + "\n    </a>\n  </div>\n</div>");
+    modal = $("<div class='reveal-modal medium' data-reveal>\n  <h2 class='header'></h2>\n  <p class='warning'></p>\n  <div class='footer'>\n    <a class='cancel-button secondary button radius inline'></a>\n  </div>\n</div>");
     modal.find('.header').html(confirm.title || confirm_localization['title']);
     modal.find('.warning').html(confirm.body || confirm_localization['body']);
+    modal.find('.cancel-button').html(confirm.cancel || confirm_localization['cancel']);
     confirm_button = element.is('a') ? element.clone() : $('<a/>');
     confirm_button.removeAttr('class').removeAttr('data-confirm').addClass('button radius alert inline confirm').html(confirm.ok || confirm_localization['ok']);
     if (element.is('form') || element.is(':input')) {
