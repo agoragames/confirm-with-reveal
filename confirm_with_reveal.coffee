@@ -47,7 +47,7 @@ reveal_confirm = (element) ->
       <p class='warning'></p>
       <div class='footer'>
         <a class='cancel-button secondary button radius inline'>
-          #{confirm_localization['cancel']}
+          #{confirm.cancel || confirm_localization['cancel']}
         </a>
       </div>
     </div>
