@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.1 (2014-02-21)
+
+* Start using [semver](http://semver.org); add Bower package file.
+
 ## 2014-02-21 release
 
 * Use dialog-specific `cancel` localization if set.
