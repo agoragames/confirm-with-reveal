@@ -46,9 +46,7 @@ reveal_confirm = (element) ->
       <h2 class='header'></h2>
       <p class='warning'></p>
       <div class='footer'>
-        <a class='cancel-button secondary button radius inline'>
-          #{confirm_localization['cancel']}
-        </a>
+        <a class='cancel-button secondary button radius inline'></a>
       </div>
     </div>
     """
@@ -59,6 +57,9 @@ reveal_confirm = (element) ->
   modal
     .find('.warning')
     .html(confirm.body || confirm_localization['body'])
+  modal
+    .find('.cancel-button')
+    .html(confirm.cancel || confirm_localization['cancel'])
 
   confirm_button = if element.is('a') then element.clone() else $('<a/>')
   confirm_button

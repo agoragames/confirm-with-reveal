@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2014-02-21 release
+
+* Use dialog-specific `cancel` localization if set.
+
 ## 2014-02-20 release
 
 * Compatibility update for ZURB Foundation 5.
