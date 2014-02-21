@@ -14,12 +14,14 @@
 #     }
 #
 # Options:
-#   title      Text for title bar of modal popup
-#   body       Warning inside main content area of popup
-#   password   If set, will require the user to type out this string to enable the action
-#   prompt     Format string for password prompt (password inserted in place of %s)
-#   ok         Label for the button that does the delete/destroy/etc.
-#   cancel     Label for the button that cancels out of the action
+#   title        Text for title bar of modal popup
+#   body         Warning inside main content area of popup
+#   password     If set, will require the user to type out this string to enable the action
+#   prompt       Format string for password prompt (password inserted in place of %s)
+#   ok           Label for the button that does the delete/destroy/etc.
+#   ok_class     CSS class for the button that does the delete/destroy/etc.
+#   cancel       Label for the button that cancels out of the action
+#   cancel_class CSS class for the button that cancels out of the action
 
 $ = this.jQuery
 
@@ -29,7 +31,9 @@ localization_defaults =
   password: false
   prompt: 'Type <i>%s</i> to continue:'
   ok: 'Confirm'
+  ok_class: 'button radius alert inline confirm'
   cancel: 'Cancel'
+  cancel_class: 'button radius secondary inline'
 
 reveal_confirm = (element) ->
 
@@ -46,7 +50,7 @@ reveal_confirm = (element) ->
       <h2 class='header'></h2>
       <p class='warning'></p>
       <div class='footer'>
-        <a class='cancel-button secondary button radius inline'></a>
+        <a class='cancel-button #{confirm.cancel_class || confirm_localization['cancel_class']}'></a>
       </div>
     </div>
     """
@@ -65,7 +69,7 @@ reveal_confirm = (element) ->
   confirm_button
     .removeAttr('class')
     .removeAttr('data-confirm')
-    .addClass('button radius alert inline confirm')
+    .addClass(confirm.ok_class || confirm_localization['ok_class'])
     .html(confirm.ok || confirm_localization['ok'])
 
   if element.is('form') or element.is(':input')
