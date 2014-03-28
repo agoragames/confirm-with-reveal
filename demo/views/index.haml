@@ -3,43 +3,49 @@
   %head
     %meta{ charset: 'UTF-8' }
     %title Confirm with Reveal
-    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/normalize.css' }
-    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/css/foundation.css' }
+    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/css/normalize.css' }
+    %link{ rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/css/foundation.css' }
   %body
 
     .row
       .columns.text-center
         %h1 Confirm with Reveal
+        %hr
 
         %p
-          Confirming a link click:
-          -#
-            If a string value is set for the data-confirm attribute, the library will
-            fall back to the plain window.confirm function. Set an integer to use the
-            Reveal plugin with all default values.
+          Confirming a link click, using plugin defaults:
           %a{ href: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
-              data: { confirm: 1 } } Danger, danger!
+              data: { confirm: true } } Danger, danger!
+        %hr
 
+        -# Note that the options hash must be serialized with to_json
         %form{ action: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
                data: { confirm: { title: 'For serious?',
                                   body: 'Are you really, really sure you want to do that?',
-                                  password: 'YES REALLY',
-                                  ok: 'Launch' }.to_json } }
-          %p Confirming a form submission:
+                                  password: 'YES',
+                                  ok: 'Engage!' }.to_json } }
+          %p Confirming form submission (featuring per-element plugin customization):
           %p
-            %input{ type: 'submit', class: 'small button radius alert', value: 'High voltage!' }
+            %input.button.alert{ type: 'submit', value: 'Perilous activity' }
+        %hr
 
         %form{ action: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif' }
-          %p Confirming particular buttons in a form:
+          %p Confirming selected buttons in a form, leaving others unprotected:
           %p
-            %input{ type: 'submit', class: 'small button radius', value: 'Safe' }
-            %input{ type: 'submit', class: 'small button radius alert', value: 'Risky',
-                    data: { confirm: { title: 'That’s risky!',
-                                       body: 'You are venturing into a zone of danger.' }.to_json } }
+            %input.button{ type: 'submit', value: 'I’m feeling lucky' }
+            %input.button.alert{ type: 'submit', value: 'Save me from myself',
+                                 data: { confirm: true } }
+        %hr
 
-    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/vendor/jquery.js' }
-    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/foundation/foundation.js' }
-    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/foundation/foundation.reveal.js' }
+        -# If data-confirm is a non-JSON string, we fall back to window.confirm
+        %p
+          Falling back to plain <strong>window.confirm</strong>:
+          %a{ href: 'http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif',
+              data: { confirm: 'It’s not pretty!' } } Plain vanilla danger
+
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/vendor/jquery.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/foundation/foundation.js' }
+    %script{ src: '//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.1/js/foundation/foundation.reveal.js' }
 
     -#
       If jquery_ujs (from jquery-rails) is included prior to confirm_with_reveal,
@@ -48,12 +54,13 @@
       will still work without jquery_ujs being present.
     %script{ src: asset_path('confirm_with_reveal') }
 
-    -# Localization may be customized if desired...
+    -#
+      Plugin defaults may be overridden globally in the setup call, and
+      event listeners may be attached to the confirm/cancel events:
     :coffeescript
-      window.confirm_localization =
-        ok: 'Proceed'
-    -# Other L10n keys and default values:
-      cancel: 'Cancel'
-      title: 'Are you sure?'
-      body: 'This action cannot be undone.'
-      password: 'Type <i>%s</i> to continue:'
+      $(document).confirmWithReveal
+        ok: 'Continue'
+      .on 'cancel.reveal', (e) ->
+        console.log 'Never mind!'
+      .on 'confirm.reveal', (e) ->
+        console.log 'OK, here we go!'

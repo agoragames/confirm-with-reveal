@@ -1,132 +1,138 @@
-# Expanded version of $.rails.allowAction from jquery_ujs.js
+# Examples using Rails’ link_to helper
 #
-# Falls back to plain window.confirm() for links/buttons with just a simple 'confirm' key...
-#   = link_to 'Delete', foo_path(foo), method: :delete, confirm: 'Are you sure?'
+# Basic usage:
+#   = link_to 'Delete', foo_path(foo), method: :delete, data: { confirm: true }
 #
-# Uses a nice Zurb Foundation modal window for links/buttons with HTML5 data set...
+# Customization of individual links/buttons via JSON in data-confirm:
 #   = link_to 'Delete', foo_path(foo), method: :delete, data: {
 #       confirm: {
 #         title: 'You might want to think twice about this!',
-#         body: 'If you click "Simon Says Delete", there will be no takebacks!',
-#         password: 'YESREALLY',
+#         body: 'If you click “Simon Says Delete” there will be no takebacks!',
 #         ok: 'Simon Says Delete'
 #       }
 #     }
 #
-# Options:
-#   title        Text for title bar of modal popup
-#   body         Warning inside main content area of popup
-#   password     If set, will require the user to type out this string to enable the action
-#   prompt       Format string for password prompt (password inserted in place of %s)
-#   ok           Label for the button that does the delete/destroy/etc.
-#   ok_class     CSS class for the button that does the delete/destroy/etc.
-#   cancel       Label for the button that cancels out of the action
-#   cancel_class CSS class for the button that cancels out of the action
+# Fall back to window.confirm() when confirm is a plain string:
+#   = link_to 'Delete', foo_path(foo), method: :delete, confirm: 'Are you sure?'
 
 $ = this.jQuery
 
-localization_defaults =
-  title: 'Are you sure?'
-  body: 'This action cannot be undone.'
-  password: false
-  prompt: 'Type <i>%s</i> to continue:'
-  ok: 'Confirm'
-  ok_class: 'button radius alert inline confirm'
-  cancel: 'Cancel'
-  cancel_class: 'button radius secondary inline'
+$.fn.extend
+  confirmWithReveal: (options = {}) ->
 
-reveal_confirm = (element) ->
+    defaults =
+      modal_class: 'medium'
+      title: 'Are you sure?'
+      title_class: ''
+      body: 'This action cannot be undone.'
+      body_class: ''
+      password: false
+      prompt: 'Type <strong>%s</strong> to continue:'
+      footer_class: ''
+      ok: 'Confirm'
+      ok_class: 'button alert'
+      cancel: 'Cancel'
+      cancel_class: 'button secondary'
+    settings = $.extend {}, defaults, options
 
-  confirm_localization = $.extend {},
-    localization_defaults, window.confirm_localization
+    do_confirm = ($el) ->
 
-  confirm = element.data('confirm')
-  return true unless confirm
-  if typeof confirm == 'string'
-    return window.confirm confirm
+      el_options = $el.data('confirm')
+      el_options ?= {}
 
-  modal = $ """
-    <div class='reveal-modal medium' data-reveal>
-      <h2 class='header'></h2>
-      <p class='warning'></p>
-      <div class='footer'>
-        <a class='cancel-button #{confirm.cancel_class || confirm_localization['cancel_class']}'></a>
-      </div>
-    </div>
-    """
+      if (typeof el_options == 'string') and (el_options.length > 0)
+        return fallback_confirm.call(window, el_options)
 
-  modal
-    .find('.header')
-    .html(confirm.title || confirm_localization['title'])
-  modal
-    .find('.warning')
-    .html(confirm.body || confirm_localization['body'])
-  modal
-    .find('.cancel-button')
-    .html(confirm.cancel || confirm_localization['cancel'])
+      option = (name) ->
+        el_options[name] || settings[name]
 
-  confirm_button = if element.is('a') then element.clone() else $('<a/>')
-  confirm_button
-    .removeAttr('class')
-    .removeAttr('data-confirm')
-    .addClass(confirm.ok_class || confirm_localization['ok_class'])
-    .html(confirm.ok || confirm_localization['ok'])
+      # TODO: allow caller to pass in a template (DOM element to clone?)
+      modal = $("""
+        <div data-reveal class='reveal-modal #{option 'modal_class'}'>
+          <h2 data-confirm-title class='#{option 'title_class'}'></h2>
+          <p data-confirm-body class='#{option 'body_class'}'></p>
+          <div data-confirm-footer class='#{option 'footer_class'}'>
+            <a data-confirm-cancel class='#{option 'cancel_class'}'></a>
+          </div>
+        </div>
+        """)
 
-  if element.is('form') or element.is(':input')
-    confirm_button.on 'click', ->
-      element
-        .closest('form')
+      confirm_button = if $el.is('a') then $el.clone() else $('<a/>')
+      confirm_button
         .removeAttr('data-confirm')
-        .submit()
+        .attr('class', option 'ok_class')
+        .html(option 'ok')
+        .on 'click', (e) ->
+          return false if $(this).prop('disabled')
+          # TODO: Handlers of this event cannot stop the confirmation from
+          # going through (e.g. chaining additional validation). Fix TBD.
+          $el.trigger('confirm.reveal', e)
+          if $el.is('form, :input')
+            $el
+              .closest('form')
+              .removeAttr('data-confirm')
+              .submit()
 
-  modal
-    .find('.cancel-button')
-    .on 'click', (e) ->
-      modal.foundation('reveal', 'close')
-  modal
-    .find('.footer')
-    .append(confirm_button)
+      modal
+        .find('[data-confirm-title]')
+        .html(option 'title')
+      modal
+        .find('[data-confirm-body]')
+        .html(option 'body')
+      modal
+        .find('[data-confirm-cancel]')
+        .html(option 'cancel')
+        .on 'click', (e) ->
+          modal.foundation('reveal', 'close')
+          $el.trigger('cancel.reveal', e)
+      modal
+        .find('[data-confirm-footer]')
+        .append(confirm_button)
 
-  if (password = confirm.password || confirm_localization['password'])
-    confirm_label =
-      (confirm.prompt || confirm_localization['prompt'])
-        .replace '%s', password
-    confirm_html = """
-      <label>#{confirm_label}</label>
-      <input class='confirm-password' type='text' />
-      """
-    modal
-      .find('.warning')
-      .after($(confirm_html))
-    modal
-      .find('.confirm-password')
-      .on 'keyup', (e) ->
-        confirm_button.toggleClass 'disabled', $(this).val() != password
-    confirm_button
-      .addClass('disabled')
-      .on 'click', (e) ->
-        return false if $(this).hasClass('disabled')
+      if (password = option 'password')
+        confirm_label =
+          (option 'prompt')
+            .replace '%s', password
+        confirm_html = """
+          <label>
+            #{confirm_label}
+            <input data-confirm-password type='text'/>
+          </label>
+          """
+        modal
+          .find('[data-confirm-body]')
+          .after($(confirm_html))
+        modal
+          .find('[data-confirm-password]')
+          .on 'keyup', (e) ->
+            disabled = $(this).val() != password
+            confirm_button
+              .toggleClass('disabled', disabled)
+              .prop('disabled', disabled)
+          .trigger('keyup')
 
-  modal
-    .appendTo($('body'))
-    .foundation()
-    .foundation('reveal', 'open')
-    .on 'closed.fndtn.reveal', (e) ->
-      modal.remove()
+      modal
+        .appendTo($('body'))
+        .foundation()
+        .foundation('reveal', 'open')
+        .on 'closed.fndtn.reveal', (e) ->
+          modal.remove()
 
-  return false
+      return false
 
-if $.rails
+    confirm_handler = (e) ->
+      unless (do_confirm $(this))
+        e.preventDefault()
+        e.stopImmediatePropagation()
 
-  $.rails.allowAction = reveal_confirm
+    fallback_confirm = if $.rails?.confirm then $.rails.confirm else window.confirm
 
-else
+    if $.rails?.allowAction
+      $.rails.allowAction = (link) ->
+        do_confirm $(link)
 
-  confirm_handler = (e) ->
-    proceed = reveal_confirm $(this)
-    if !proceed
-      e.preventDefault()
-      e.stopImmediatePropagation()
-    proceed
-  $(document).on 'click', 'a[data-confirm], :input[data-confirm]', confirm_handler
-  $(document).on 'submit', 'form[data-confirm]', confirm_handler
+    return @each () ->
+      $el = $(this)
+      $el.on 'click', 'a[data-confirm], :input[data-confirm]', confirm_handler
+      $el.on 'submit', 'form[data-confirm]', confirm_handler
+      $el
