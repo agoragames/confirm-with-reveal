@@ -36,23 +36,31 @@
       </div>
       <div class="columns large-8">
         <h2>Examples</h2>
-        <h3>Confirming a link click</h3>
+        <hr>
         <p>
-          <a data-confirm='1' href="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">Danger, danger!</a>
+          Confirming a link click:
+          <a data-confirm href="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">Danger, danger!</a>
         </p>
-        <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif" data-confirm='{"title":"For serious?","body":"Are you really, really sure you want to do that?","password":"YES REALLY","ok":"Launch"}'>
-          <h3>Confirming a form submission</h3>
+        <hr>
+        <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif" data-confirm='{"title":"For serious?","body":"Are you really, really sure you want to do that?","password":"YES","ok":"Engage!"}'>
+          <p>Confirming form submission (featuring per-element plugin customization):</p>
           <p>
-            <input class="small button radius alert" type="submit" value="High voltage!">
+            <input class="button alert" type="submit" value="Perilous activity">
           </p>
         </form>
+        <hr>
         <form action="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">
-          <h3>Confirming particular buttons in a form</h3>
+          <p>Confirming selected buttons in a form, leaving others unprotected:</p>
           <p>
-            <input class="small button radius" type="submit" value="Safe">
-            <input class="small button radius alert" data-confirm='{"title":"That’s risky!","body":"You are venturing into a zone of danger."}' type="submit" value="Risky">
+            <input class="button" type="submit" value="I’m feeling lucky">
+            <input class="button alert" data-confirm type="submit" value="Save me from myself">
           </p>
         </form>
+        <hr>
+        <p>
+          Falling back to plain <strong>window.confirm</strong>:
+          <a data-confirm="It’s not pretty!" href="http://24.media.tumblr.com/tumblr_lkden9rnhW1qjzex9o1_500.gif">Plain vanilla danger</a>
+        </p>
       </div>
     </div>
     <footer>
@@ -67,5 +75,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.1.1/js/foundation/foundation.reveal.js"></script>
     <script src="javascripts/scale.fix.js"></script>
     <script src="javascripts/confirm.js"></script>
+    <script>
+      $(document).confirmWithReveal();
+    </script>
   </body>
 </html>
