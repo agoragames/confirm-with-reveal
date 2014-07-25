@@ -33,15 +33,21 @@ $.fn.extend
       ok_class: 'button alert'
       cancel: 'Cancel'
       cancel_class: 'button secondary'
+
     settings = $.extend {}, defaults, options
 
     do_confirm = ($el) ->
 
       el_options = $el.data('confirm')
-      el_options ?= {}
+
+      # The confirmation is actually triggered again when hitting "OK"
+      # (or whatever) in the modal (since we clone the original link in),
+      # but since we strip off the 'confirm' data attribute, we can tell
+      # whether this is the first confirmation or a subsequent one.
+      return true if !el_options
 
       if (typeof el_options == 'string') and (el_options.length > 0)
-        return fallback_confirm.call(window, el_options)
+        return ($.rails?.confirm || window.confirm).call(window, el_options)
 
       option = (name) ->
         el_options[name] || settings[name]
@@ -120,19 +126,23 @@ $.fn.extend
 
       return false
 
-    confirm_handler = (e) ->
-      unless (do_confirm $(this))
-        e.preventDefault()
-        e.stopImmediatePropagation()
+    if $.rails
 
-    fallback_confirm = if $.rails?.confirm then $.rails.confirm else window.confirm
+      # We do NOT do the event binding if $.rails exists, because jquery_ujs
+      # has already done it for us
 
-    if $.rails?.allowAction
-      $.rails.allowAction = (link) ->
-        do_confirm $(link)
+      $.rails.allowAction = (link) -> do_confirm $(link)
+      return $(this)
 
-    return @each () ->
-      $el = $(this)
-      $el.on 'click', 'a[data-confirm], :input[data-confirm]', confirm_handler
-      $el.on 'submit', 'form[data-confirm]', confirm_handler
-      $el
+    else
+
+      handler = (e) ->
+        unless (do_confirm $(this))
+          e.preventDefault()
+          e.stopImmediatePropagation()
+
+      return @each () ->
+        $el = $(this)
+        $el.on 'click', 'a[data-confirm], :input[data-confirm]', handler
+        $el.on 'submit', 'form[data-confirm]', handler
+        $el

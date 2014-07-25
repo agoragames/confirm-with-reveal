@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.0.1 (2014-07-25)
+
+* Fix compatibility issue with [jquery-ujs](https://github.com/rails/jquery-ujs)
+  (see [issue #9](https://github.com/agoragames/confirm-with-reveal/issues/9)).
+
+## 1.0.0 (2014-03-28)
+
+* Additional UI customization options; plugin-specific confirm/cancel events.
+
 ## 0.0.3 (2014-02-25)
 
 * Fix semantic versioning tag snafu. No functional changes.
