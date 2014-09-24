@@ -40,6 +40,7 @@
         modal = $("<div data-reveal class='reveal-modal " + (option('modal_class')) + "'>\n  <h2 data-confirm-title class='" + (option('title_class')) + "'></h2>\n  <p data-confirm-body class='" + (option('body_class')) + "'></p>\n  <div data-confirm-footer class='" + (option('footer_class')) + "'>\n    <a data-confirm-cancel class='" + (option('cancel_class')) + "'></a>\n  </div>\n</div>");
         confirm_button = $el.is('a') ? $el.clone() : $('<a/>');
         confirm_button.removeAttr('data-confirm').attr('class', option('ok_class')).html(option('ok')).on('click', function(e) {
+          modal.foundation('reveal', 'close');
           if ($(this).prop('disabled')) {
             return false;
           }
