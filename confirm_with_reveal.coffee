@@ -44,7 +44,7 @@ $.fn.extend
       # (or whatever) in the modal (since we clone the original link in),
       # but since we strip off the 'confirm' data attribute, we can tell
       # whether this is the first confirmation or a subsequent one.
-      return true if !el_options
+      return true unless $el.attr('data-confirm')?
 
       if (typeof el_options == 'string') and (el_options.length > 0)
         return ($.rails?.confirm || window.confirm).call(window, el_options)

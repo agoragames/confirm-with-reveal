@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.0.2 (2015-01-08)
+
+* Ensure that bare `data-confirm` attribute without value launches Foundation
+  confirmation dialog and `data-confirm` with a plain string attribute falls
+  back to using browser’s built-in `window.confirm`.
+  [Fixes #12](https://github.com/agoragames/confirm-with-reveal/issues/12).
+
 ## 1.0.1 (2014-07-25)
 
 * Fix compatibility issue with [jquery-ujs](https://github.com/rails/jquery-ujs)
