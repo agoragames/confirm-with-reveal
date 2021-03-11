@@ -12,7 +12,7 @@ GEM
     haml (4.0.2)
       tilt
     hike (1.2.2)
-    json (1.7.7)
+    json (2.3.0)
     multi_json (1.7.3)
     rack (1.5.2)
     rack-protection (1.5.0)
