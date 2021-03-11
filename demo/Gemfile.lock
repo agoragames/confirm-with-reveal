@@ -14,7 +14,7 @@ GEM
     hike (1.2.2)
     json (1.7.7)
     multi_json (1.7.3)
-    rack (1.5.2)
+    rack (1.6.13)
     rack-protection (1.5.0)
       rack
     shotgun (0.9)
