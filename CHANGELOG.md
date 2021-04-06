@@ -2,6 +2,7 @@
 
 ## 1.1.0 (2021-04-05)
 
+for usage with Rails6 and Foundation 6
 * use $.rails.confirm to comply to Rails 6
 * use Foundation 6 for reveal / close
 
