@@ -1,11 +1,12 @@
 {
   "name": "confirm-with-reveal",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "homepage": "https://github.com/agoragames/confirm-with-reveal",
   "authors": [
-    "Jack Letourneau <jletourneau@agoragames.com>"
+    "Jack Letourneau <jletourneau@agoragames.com>",
+    "Martin Meier <martin@itcmeier.de>"
   ],
-  "description": "Confirm UI actions with ZURB Foundation Reveal modals.",
+  "description": "Confirm UI actions with Foundation Reveal modals.",
   "main": "build/confirm_with_reveal.js",
   "keywords": [
     "zurb",

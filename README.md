@@ -6,7 +6,9 @@ For maximum **“are you really, really sure”** protection, the user can optio
 
 Requires [jQuery](http://jquery.com/), as well as ZURB’s [Reveal](http://foundation.zurb.com/docs/components/reveal.html) plugin.
 
-Integrates with the Rails [jQuery UJS adapter](https://github.com/indirect/jquery-rails) if the latter has been included, by overwriting `$.rails.allowAction`. Simple use of `confirm: "Are you sure?"` in the `link_to` helper will use the standard `window.confirm()` prompt; see CoffeeScript source for full usage details.
+Integrates with the Rails [jQuery UJS adapter](https://github.com/indirect/jquery-rails) if the latter has been included, by overwriting `$.rails.confirm`. Simple use of `confirm: "Are you sure?"` in the `link_to` helper will use the standard `window.confirm()` prompt; see CoffeeScript source for full usage details.
+
+For Rails < 6 use version 1.0.x that overwrites `$.rails.allowAction`.
 
 ## Example
 

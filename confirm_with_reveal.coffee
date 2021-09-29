@@ -1,4 +1,5 @@
 # Examples using Rails’ link_to helper
+# use with Foundation 6 and Rails 6
 #
 # Basic usage:
 #   = link_to 'Delete', foo_path(foo), method: :delete, data: { confirm: true }
@@ -15,7 +16,8 @@
 # Fall back to window.confirm() when confirm is a plain string:
 #   = link_to 'Delete', foo_path(foo), method: :delete, confirm: 'Are you sure?'
 
-$ = this.jQuery
+if !$
+  $ = this.jQuery
 
 $.fn.extend
   confirmWithReveal: (options = {}) ->
@@ -36,6 +38,8 @@ $.fn.extend
 
     settings = $.extend {}, defaults, options
 
+    nativeConfirm = $.rails?.confirm
+
     do_confirm = ($el) ->
 
       el_options = $el.data('confirm')
@@ -47,14 +51,14 @@ $.fn.extend
       return true unless $el.attr('data-confirm')?
 
       if (typeof el_options == 'string') and (el_options.length > 0)
-        return ($.rails?.confirm || window.confirm).call(window, el_options)
+        return (nativeConfirm || window.confirm).call(window, el_options)
 
       option = (name) ->
         el_options[name] || settings[name]
 
       # TODO: allow caller to pass in a template (DOM element to clone?)
       modal = $("""
-        <div data-reveal class='reveal-modal #{option 'modal_class'}'>
+        <div data-reveal class='reveal #{option 'modal_class'}'>
           <h2 data-confirm-title class='#{option 'title_class'}'></h2>
           <p data-confirm-body class='#{option 'body_class'}'></p>
           <div data-confirm-footer class='#{option 'footer_class'}'>
@@ -89,7 +93,7 @@ $.fn.extend
         .find('[data-confirm-cancel]')
         .html(option 'cancel')
         .on 'click', (e) ->
-          modal.foundation('reveal', 'close')
+          modal.foundation('close')
           $el.trigger('cancel.reveal', e)
       modal
         .find('[data-confirm-footer]')
@@ -120,8 +124,8 @@ $.fn.extend
       modal
         .appendTo($('body'))
         .foundation()
-        .foundation('reveal', 'open')
-        .on 'closed.fndtn.reveal', (e) ->
+        .foundation('open')
+        .on 'closed.zf.reveal', (e) ->
           modal.remove()
 
       return false
@@ -131,7 +135,7 @@ $.fn.extend
       # We do NOT do the event binding if $.rails exists, because jquery_ujs
       # has already done it for us
 
-      $.rails.allowAction = (link) -> do_confirm $(link)
+      $.rails.confirm = (message, element) -> do_confirm $(element)
       return $(this)
 
     else
